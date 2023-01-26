@@ -15,12 +15,12 @@ const App = () => {
             <Layout>
     <Routes>
         <Route path={`/`} element={<MainPage/>}/>
-        <Route path={`posts`} element={<FullPostsPage/>}/>
-        <Route path={`:id`} element={<PostPage/>}/>
-        <Route path={`new`} element={<AddPostPage/>}/>
-        <Route path={`:id/edit`} element={<EditPostPage/>}/>
-        <Route path={`register`} element={<RegisterPage/>}/>
-        <Route path={`login`} element={<LoginPage/>}/>
+        <Route path={`/posts`} element={<FullPostsPage/>}/>
+        <Route path={`/:id`} element={<PostPage/>}/>
+        <Route path={`/new`} element={<AddPostPage/>}/>
+        <Route path={`/:id/edit`} element={<EditPostPage/>}/>
+        <Route path={`/register`} element={<RegisterPage/>}/>
+        <Route path={`/login`} element={<LoginPage/>}/>
 
     </Routes>
             </Layout>

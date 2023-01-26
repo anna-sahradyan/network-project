@@ -1,10 +1,45 @@
 import React from 'react';
+import {Link, NavLink} from "react-router-dom";
+import {Navigate} from "react-router";
 
 const Nav = () => {
+    const isAuth = false;
+    const activeStyles = {
+        color: "white"
+    }
     return (
-        <div>
-            
-        </div>
+        <>
+            <div className={"flex py-4 justify-between items-center bg-blue-800 static"}>
+                <span
+                    className={"flex justify-center items-center w-6 h-6 bg-white text-sx text-black rounded-sm ml-8 font-bold font-sans"}>
+E
+                </span>
+                {isAuth &&
+                    <div className={" absolute  left-40"}>
+                        <ul className={"flex gap-20 "}>
+                            <li><NavLink to={"/"}
+                                         className={"text-sx text-gray-900 hover:text-white font-bold"}
+                                         style={({isActive}) => isActive ? activeStyles : undefined}>Home</NavLink></li>
+                            <li><NavLink to={"/post"} className={"text-sx text-gray-900 hover:text-white font-bold"}
+                                         style={({isActive}) => isActive ? activeStyles : undefined}>My
+                                Posts</NavLink></li>
+                            <li><NavLink to={"/new"} className={"text-sx text-gray-900 hover:text-white font-bold"}
+                                         style={({isActive}) => isActive ? activeStyles : undefined}>Add
+                                Post</NavLink></li>
+                        </ul>
+                    </div>
+                }
+
+                    <div
+                        className={"flex justify-center items-center bg-white text-sx text-white rounded-sm px-4 absolute right-5"}>
+                        {isAuth ?
+                            (<button className={"text-black font-bold items-center "}>sign out</button>):(<Link to={'/login'} className={"text-black font-bold items-center "}>Sign in </Link>
+                            )}
+                    </div>
+
+
+            </div>
+        </>
     );
 };
 
