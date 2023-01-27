@@ -2,8 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
-import authRouter from "./routes/auth-router.js"
-
+import authRouter from "./routes/auth-router.js";
+import postRouter from "./routes/post-router.js";
 dotenv.config();
 //?CONSTANTS
 const PORT = process.env.PORT || 4000
@@ -13,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(`/auth`, authRouter);
+app.use(`/post`, postRouter);
 
 
 const start = async () => {

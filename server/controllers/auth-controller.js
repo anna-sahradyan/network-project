@@ -2,36 +2,46 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 //!Register
-export const register = async (req, res) => {
 
+export const register = async (req, res) => {
     try {
-        const {username, password} = req.body;
-        const isUsed = await User.findOne({username})
+        const { username, password } = req.body
+
+        const isUsed = await User.findOne({ username })
+
         if (isUsed) {
             return res.json({
-                message: `This username have already used`
+                message: `This username have already used`,
             })
         }
-        const salt = bcrypt.genSaltSync(8);
-        const hash = bcrypt.hashSync(password, salt);
+
+        const salt = bcrypt.genSaltSync(10)
+        const hash = bcrypt.hashSync(password, salt)
+
         const newUser = new User({
             username,
-            password: hash
-        });
+            password: hash,
+        })
+
+        const token = jwt.sign(
+            {
+                id: newUser._id,
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: '30d' },
+        )
+
         await newUser.save()
+
         res.json({
             newUser,
-            message: `Registration Was Successful`
+            token,
+            message: `Registration Was Successful`,
         })
-
-    } catch (err) {
-        res.json({
-
-            message: `You aren't registration `
-        })
+    } catch (error) {
+        res.json({ message: `You aren't registration ` })
     }
-
-};
+}
 //!Login
 export const login = async (req, res) => {
     try {
@@ -69,6 +79,7 @@ export const login = async (req, res) => {
 export const getMe = async (req, res) => {
     try {
         const user = await User.findById(req.userId);
+
         if (!user) {
             return res.json({
                 message: `No such user`
@@ -79,10 +90,10 @@ export const getMe = async (req, res) => {
 
             }, process.env.JWT_SECRET,
             {expiresIn: `30d`});
-        res.json({
+     res.json({
             user,
             token,
-            message: "No access"
+
         })
 
     } catch (err) {

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export  default     (req, res, next) => {
+export const checkAuth = (req, res, next) => {
     const token = (req.headers.authorization || " ").replace(/Bearer\s?/, " ");
     if (token) {
         try {
@@ -8,13 +8,13 @@ export  default     (req, res, next) => {
             req.userId = decoded._id;
             next();
         } catch (err) {
-            return res.status(403).json({
+            return res.json({
                 message: "not a connection"
             });
         }
 
     } else {
-        return res.status(403).json({
+        return res.json({
             message: "not a connection"
         });
     }
